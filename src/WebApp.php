@@ -1,5 +1,7 @@
 <?php
 
+namespace Mfw;
+
 use FastRoute\Dispatcher;
 use Mfw\Exception\AppException;
 use Mfw\Exception\HttpException;

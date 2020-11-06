@@ -23,18 +23,18 @@ class WebApp implements RequestHandlerInterface
     private $dispatcher;
 
     /** @var array */
-    private $middlewares = [];
+    private $middleware = [];
 
     /**
      * @param Dispatcher $dispatcher
      * @param ResolverInterface $resolver
-     * @param array $middlewares
+     * @param array $middleware
      */
-    public function __construct(Dispatcher $dispatcher, ResolverInterface $resolver, array $middlewares = [])
+    public function __construct(Dispatcher $dispatcher, ResolverInterface $resolver, array $middleware = [])
     {
         $this->resolver = $resolver;
         $this->dispatcher = $dispatcher;
-        $this->middlewares = $middlewares;
+        $this->middleware = $middleware;
     }
 
     /**
@@ -49,13 +49,13 @@ class WebApp implements RequestHandlerInterface
 
         switch ($routeInfo[0]) {
             case Dispatcher::FOUND:
-                $request = $this->buildAttributes($request, $routeInfo[2]);
-
-                $chain = array_merge($this->middlewares, (array)$routeInfo[1]);
+                $chain = array_merge($this->middleware, (array)$routeInfo[1]);
 
                 $relay = new Relay($chain, function (string $entry) {
                     return $this->resolver->resolve($entry);
                 });
+
+                $request = $this->buildAttributes($request, $routeInfo[2]);
 
                 return $relay->handle($request);
             case Dispatcher::NOT_FOUND:

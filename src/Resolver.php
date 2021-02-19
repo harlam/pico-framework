@@ -23,29 +23,33 @@ class Resolver implements ResolverInterface
     }
 
     /**
-     * @param string $uid
+     * @param mixed $value
      * @return mixed
      * @throws ReflectionException
      * @throws AppException
      */
-    public function __invoke(string $uid)
+    public function __invoke($value)
     {
-        return $this->resolve($uid);
+        return $this->resolve($value);
     }
 
     /**
-     * @param string $uid
+     * @param mixed $value
      * @return mixed
      * @throws ReflectionException
      * @throws AppException
      */
-    public function resolve(string $uid)
+    public function resolve($value)
     {
-        if ($this->container->has($uid)) {
-            return $this->container->get($uid);
+        if (is_callable($value)) {
+            return $value;
         }
 
-        $reflection = new ReflectionClass($uid);
+        if ($this->container->has($value)) {
+            return $this->container->get($value);
+        }
+
+        $reflection = new ReflectionClass($value);
 
         $constructor = $reflection->getConstructor();
 

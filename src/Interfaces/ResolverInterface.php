@@ -5,8 +5,8 @@ namespace Mfw\Interfaces;
 interface ResolverInterface
 {
     /**
-     * @param string $value
+     * @param mixed $value
      * @return mixed
      */
-    public function resolve(string $value);
+    public function resolve($value);
 }

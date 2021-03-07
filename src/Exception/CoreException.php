@@ -4,14 +4,14 @@ namespace Mfw\Exception;
 
 use Exception;
 
-class AppException extends Exception
+class CoreException extends Exception
 {
     /** @var array */
     protected $context = [];
 
     /**
      * @param array $context
-     * @return AppException
+     * @return CoreException
      */
     public function setContext(array $context): self
     {

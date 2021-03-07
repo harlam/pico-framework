@@ -2,7 +2,7 @@
 
 namespace Mfw\Exception;
 
-class HttpException extends AppException
+class HttpException extends CoreException
 {
 
 }
